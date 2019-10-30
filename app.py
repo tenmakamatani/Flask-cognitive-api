@@ -38,7 +38,6 @@ def analyze_image():
         res = req.post(endpoint, headers=headers, params=params, data=file)
     except Exception(e):
         print(e)
-    print(res.json())
     tags = res.json()['description']['tags']
 
     splited_text = open('./resources/splited.txt').read()
