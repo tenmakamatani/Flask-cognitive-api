@@ -2,8 +2,10 @@ from flask import Flask, jsonify, request
 from markovify import NewlineText
 import requests as req
 import os, sys, base64
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # Set environmental values
 if 'ENDPOINT' in os.environ and 'SUBSCRIPTION_KEY' in os.environ:
