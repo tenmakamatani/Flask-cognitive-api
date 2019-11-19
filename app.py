@@ -1,8 +1,17 @@
 from flask import Flask, jsonify, request
 from markovify import NewlineText
 import requests as req
-import os, sys, base64
+import os, sys
+
+# Setup CORS
 from flask_cors import CORS
+
+# Setup environmental values
+from dotenv import load_dotenv
+
+load_dotenv(verbose=True)
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 
 app = Flask(__name__)
 CORS(app)
@@ -38,9 +47,9 @@ def analyze_image():
     # Call API and get tags
     try:
         res = req.post(endpoint, headers=headers, params=params, data=file)
-    except Exception(e):
+        tags = res.json()['description']['tags']
+    except Exception as e:
         print(e)
-    tags = res.json()['description']['tags']
 
     splited_text = open('./resources/splited.txt').read()
     text_model = NewlineText(splited_text)
@@ -56,10 +65,10 @@ def analyze_image():
 # Error handling
 @app.errorhandler(Exception)
 def error_handler(e):
+    code = 500
     return jsonify({
-        'error': True,
-        'message': 'Some error occured in server.'
-    }), 500
+        'error': str(e)
+    }), code
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=os.environ['PORT'], debug=True)

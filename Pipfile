@@ -3,14 +3,18 @@ name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
 
+[scripts]
+start = "python app.py"
+
 [dev-packages]
 
 [packages]
-flask = "*"
-janome = "*"
-markovify = "*"
-requests = "*"
-flask-cors = "*"
+flask = "1.1.1"
+janome = "0.3.10"
+markovify = "0.7.2"
+requests = "2.22.0"
+flask-cors = "3.0.8"
+python-dotenv = "0.10.3"
 
 [requires]
 python_version = "3.7"
