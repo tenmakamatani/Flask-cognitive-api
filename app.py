@@ -60,7 +60,7 @@ def analyze_image():
             return sentence
         except:
             pass
-    return 'Could not create sentence'
+    return text_model.make_sentence(tries=300, max_overlap_ratio=0.7).replace(' ', '')
 
 # Error handling
 @app.errorhandler(Exception)
